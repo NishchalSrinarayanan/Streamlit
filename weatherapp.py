@@ -20,7 +20,7 @@ def get_weather_by_zip(zip_code):
             lon = geocode_data[0]['lon']
 
             # OpenWeatherMap API URL and API key
-            url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={st.secrets[openweathermap]}"
+            url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={st.secrets[haha]}"
 
             # Send a GET request to the specified URL
             response = requests.get(url)
