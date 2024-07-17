@@ -13,7 +13,6 @@ if symbol:
         data = response.json()
 
         if "Global Quote" in data:
-            try:
                 price = float(data["Global Quote"]["05. price"])
                 yest_price = float(data["Global Quote"]["08. previous close"])
 
