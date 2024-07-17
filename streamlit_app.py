@@ -4,6 +4,7 @@ import requests
 st.title("Stock Price Checker")
 
 symbol = st.text_input("Enter Stock Symbol:")
+
 if symbol:
     url = f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={st.secrets['api_key']}"
     response = requests.get(url)
