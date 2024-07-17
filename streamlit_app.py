@@ -32,5 +32,5 @@ if symbol and api_key:
                     st.write(f"The stock price has increased by {diff_better} dollars since yesterday.")
                 elif diff < 0:
                     st.write(f"The stock price has decreased by {diff_better} dollars since yesterday.")
-                else:
+                finally:
                     st.write("The stock price has remained the same since yesterday.")
