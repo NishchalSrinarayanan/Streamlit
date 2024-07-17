@@ -4,7 +4,7 @@ import streamlit as st
 # Function to get weather data using a zip code
 def get_weather_by_zip(zip_code):
     # Define the URL for the geocoding API request
-    geocode_url = f"https://geocode.maps.co/search?q={zip_code}&api_key={st.secrets[geocode]}"
+    geocode_url = f"https://geocode.maps.co/search?q={zip_code}&api_key={st.secrets['geocode']}"
 
     # Send a GET request to the geocoding API
     geocode_response = requests.get(geocode_url)
@@ -20,7 +20,7 @@ def get_weather_by_zip(zip_code):
             lon = geocode_data[0]['lon']
 
             # OpenWeatherMap API URL and API key
-            url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={st.secrets[haha]}"
+            url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={st.secrets['haha']}"
 
             # Send a GET request to the specified URL
             response = requests.get(url)
