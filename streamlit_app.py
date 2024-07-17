@@ -5,7 +5,7 @@ st.title("Stock Price Checker")
 
 symbol = st.text_input("Enter Stock Symbol:")
 
-if symbol and api_key:
+if symbol:
     url = f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={api_key}"
     response = requests.get(url)
 
@@ -35,4 +35,4 @@ if symbol and api_key:
     else:
         st.write("Error fetching data from Alpha Vantage API.")
 else:
-    st.write("Please enter both the stock symbol and API key.")
+    st.write("Please enter the stock symbol.")
