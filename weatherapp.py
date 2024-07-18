@@ -3,8 +3,12 @@ import streamlit as st
 
 # Function to get weather data using a zip code
 def get_weather_by_zip(zip_code):
+    # Get API keys from Streamlit secrets
+    geocode_api_key = st.secrets["geocode"]
+    openweathermap_api_key = st.secrets["openweathermap"]
+
     # Define the URL for the geocoding API request
-    geocode_url = f"https://geocode.maps.co/search?q={zip_code}&api_key={st.secrets['geocode']}"
+    geocode_url = f"https://geocode.maps.co/search?q={zip_code}&api_key={geocode_api_key}"
 
     # Send a GET request to the geocoding API
     geocode_response = requests.get(geocode_url)
@@ -15,12 +19,20 @@ def get_weather_by_zip(zip_code):
         geocode_data = geocode_response.json()
 
         if geocode_data:
-            # Extract latitude and longitude from the first result
-            lat = geocode_data[0]['lat']
-            lon = geocode_data[0]['lon']
+            # If multiple places are found, prompt the user to choose one
+            if len(geocode_data) > 1:
+                st.write("Multiple locations found. Please choose one:")
+                options = [place['display_name'] for place in geocode_data]
+                choice = st.selectbox("Select a location", options)
+                selected_place = geocode_data[options.index(choice)]
+                lat = selected_place['lat']
+                lon = selected_place['lon']
+            else:
+                lat = geocode_data[0]['lat']
+                lon = geocode_data[0]['lon']
 
             # OpenWeatherMap API URL and API key
-            url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={st.secrets['haha']}"
+            url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={openweathermap_api_key}"
 
             # Send a GET request to the specified URL
             response = requests.get(url)
@@ -38,17 +50,19 @@ def get_weather_by_zip(zip_code):
                 feels_like_celsius = feels_like_kelvin - 273.15
                 city_name = data['name']
 
-                # Display the results in Streamlit
+                # Display the results
                 st.write(f"In {city_name}:")
                 st.write(f"The current temperature is {temperature_celsius:.2f} degrees Celsius.")
                 st.write(f"But it feels like it is {feels_like_celsius:.2f} degrees Celsius")
 
-# Streamlit app title
-st.title("Weather Checker")
-
-# User input for zip code
+# Streamlit app
+st.title("Weather App")
 zip_code = st.text_input("Enter zip code:")
-
+if st.button("Get Weather"):
+    if zip_code:
+        get_weather_by_zip(zip_code)
+    else:
+        st.write("Please enter a zip code.")
 # Check if zip_code is provided
 if zip_code:
     # Call the function to get weather data
