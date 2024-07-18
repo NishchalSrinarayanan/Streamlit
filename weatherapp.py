@@ -5,7 +5,7 @@ import streamlit as st
 def get_weather_by_zip(zip_code):
     # Get API keys from Streamlit secrets
     geocode_api_key = st.secrets["geocode"]
-    openweathermap_api_key = st.secrets["openweathermap"]
+    openweathermap_api_key = st.secrets["haha"]
 
     # Define the URL for the geocoding API request
     geocode_url = f"https://geocode.maps.co/search?q={zip_code}&api_key={geocode_api_key}"
