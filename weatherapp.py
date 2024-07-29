@@ -50,10 +50,16 @@ def get_weather_by_zip(zip_code):
                 feels_like_celsius = feels_like_kelvin - 273.15
                 city_name = data['name']
 
+                # Get weather description and chance of rain (if available)
+                weather_description = data["weather"][0]["description"]
+                chance_of_rain = data.get("rain", {}).get("1h", 0)
+
                 # Display the results
                 st.write(f"In {city_name}:")
                 st.write(f"The current temperature is {temperature_celsius:.2f} degrees Celsius.")
-                st.write(f"But it feels like it is {feels_like_celsius:.2f} degrees Celsius")
+                st.write(f"But it feels like it is {feels_like_celsius:.2f} degrees Celsius.")
+                st.write(f"Weather description: {weather_description.capitalize()}")
+                st.write(f"Chance of rain: {chance_of_rain:.2f} mm in the last hour.")
 
 # Streamlit app
 st.title("Weather App")
@@ -63,7 +69,4 @@ if st.button("Get Weather"):
         get_weather_by_zip(zip_code)
     else:
         st.write("Please enter a zip code.")
-# Check if zip_code is provided
-if zip_code:
-    # Call the function to get weather data
     get_weather_by_zip(zip_code)
